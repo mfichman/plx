@@ -21,16 +21,25 @@
  */
 
 #include "lexer.h"
+#include "assert.h"
+#include "ctype.h"
 
-typedef struct Lexer {
+struct Lexer {
   char* pos;
   char ch;
   int line;
   int column;
   char* tokendata;
   int tokenlen; 
-} Lexer;
+};
 
+static void tokenappend(Lexer* self, char ch) {
+	assert(!"not implemented");
+}
+
+static void error(Lexer* self, char const* msg) {
+	assert(!"not implemented");
+}
 
 
 static void nextchar(Lexer* self) {
@@ -44,15 +53,35 @@ static void nextline(Lexer* self) {
   nextchar(self); 
 }
 
+static void nexthex(Lexer* self) {
+	assert(!"not implemented");
+}
+
+static void nextname(Lexer* self) {
+  for (;;) {
+    if (self->ch == '\0') {
+      return;
+    }
+    else if (isalnum(self->ch)) {
+      tokenappend(self, self->ch);
+      return;
+    }
+    else {
+      return;
+    }
+  }  
+}
+
+static void nextnumber(Lexer* self) {
+  assert(!"not implemented");
+}
+
 static int checknext(Lexer* self, char expect) {
   if (*(self->pos+1) == expect) { 
     nextchar(self);
     return 1; 
   }
   else { return 0; }
-}
-
-static void error(Lexer* self, char const* msg) {
 }
 
 static void nextstring(Lexer* self) {
@@ -76,7 +105,7 @@ static void nextstring(Lexer* self) {
       case 'v': tokenappend(self, '\v'); break;
       case 'x': nexthex(self); break;
       case '\\': break; /* skip */
-      case '\"': case '\"': tokenappend(self, self->ch); break;
+      case '"': case '\'': tokenappend(self, self->ch); break;
       default:
         error(self, "invalid escape sequence"); break;
       }
@@ -137,7 +166,7 @@ TokenType Lexer_nexttoken(Lexer* self) {
       else { return TT_ERR; }
     case '.':
       nextchar(self);
-      if (checknext(self, '.')) { return TT_CAT; }
+      if (checknext(self, '.')) { return TT_CONCAT; }
       else { return TT_CONCAT; }
     case '"': case '\'':
       nextstring(self);
@@ -149,6 +178,9 @@ TokenType Lexer_nexttoken(Lexer* self) {
       nextchar(self); 
       break;
     default:
+      if (isalpha(self->ch)) { nextname(self); }	
+      else if (isdigit(self->ch)) { nextnumber(self); }
+      else { error(self, "invalid character"); }
       break;
     }
 

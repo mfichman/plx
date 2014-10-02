@@ -38,7 +38,7 @@ typedef enum NodeType {
   NT_NAME,
   NT_LITERAL,
   NT_FIELD,
-  NT_ASSIGN,
+  NT_ASSIGN
 } NodeType;
 
 typedef struct Node {

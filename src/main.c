@@ -22,7 +22,27 @@
 
 #include "node.h"
 #include "memory.h"
+#include "lexer.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-int main() {
+
+int main(int argc, char** argv) {
+  char* file = argv[1];
+  char* buf = 0;
+  long buflen = 0;
+  FILE* fd = fopen(file, "r");
+  MemPool* pool = MemPool_new(1 << 30);
+  Lexer* lexer = Lexer_new(pool);
+
+  fseek(fd, 0, SEEK_END);
+  buflen = ftell(fd);
+  fseek(fd, 0, SEEK_SET);
+  buf = malloc(buflen);
+  fread(buf, 1, buflen, fd);
+
+  Lexer_setpos(lexer, buf);
+
+
   return 0;
 }

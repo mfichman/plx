@@ -35,7 +35,8 @@ typedef enum Token {
   TT_GE,
   TT_LE,
   TT_EQ,
-  TT_CONCAT,
+  TT_STRING,
+  TT_CONCAT
 } TokenType;
 
 Lexer* Lexer_new(MemPool* pool);

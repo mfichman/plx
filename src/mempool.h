@@ -23,6 +23,8 @@
 #ifndef MEMPOOL_H
 #define MEMPOOL_H
 
+#include "stdlib.h"
+
 /* Allocate 'size' bytes from the current memory pool. */
 
 typedef struct MemPool MemPool;

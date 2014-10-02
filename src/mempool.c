@@ -24,17 +24,17 @@
 #include "stdlib.h"
 #include "assert.h"
 
-typedef struct MemPool {
+struct MemPool {
   size_t size;
   char* pool;
   char* free;
-} MemPool;
+};
 
 MemPool* MemPool_new(size_t size) {
   MemPool* self = malloc(sizeof(MemPool));
   self->size = size;
   self->pool = malloc(size);
-  self->free = 0;
+  self->free = self->pool;
   return self;
 }
 
