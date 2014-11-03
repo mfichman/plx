@@ -1,0 +1,16 @@
+
+var io = {}
+
+function io.println(str string)
+end
+
+function io.print(str string)
+end
+
+return io
+
+function main() do
+  var x = 'hello world'
+  io.print(x)
+  io.println('hello')
+end

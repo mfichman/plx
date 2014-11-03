@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
   char* buf = 0;
   long buflen = 0;
   FILE* fd = fopen(file, "r");
+  TokenType token = 0;
   MemPool* pool = MemPool_new(1 << 30);
   Lexer* lexer = Lexer_new(pool);
 
@@ -42,6 +43,11 @@ int main(int argc, char** argv) {
   fread(buf, 1, buflen, fd);
 
   Lexer_setpos(lexer, buf);
+  
+  while (token != TT_EOF) {
+    token = Lexer_debugtoken(lexer);
+    printf("\n");
+  }
 
 
   return 0;

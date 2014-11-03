@@ -1,0 +1,91 @@
+#var redis = require('redis')
+#
+#var all = redis.call('keys', '*')
+#var tab = {}
+#var total = 0 
+#var count = 0
+#
+#for i, k in all do
+#    total = total+redis.call('hlen', k)
+#    count = count+1
+#end
+
+interface io
+
+function io:write(buf string) int 
+function io:read(bytes int) string
+
+type file do
+    var fd = 0
+end
+
+
+
+interface foo do
+    var foo int
+    var bar int
+end
+
+function file:write(buf string) native int
+function file:read(bytes int) native string
+function file:readline() native string 
+function file:readall() native string 
+function file:close() native string 
+
+function open(name string, mode string) native file
+
+return module 
+    var open = open
+end
+
+
+#var file = require('file')
+
+
+function main() int do
+    var fd = io.open('foo', 'w')
+    fd:write('foo')
+    fd:write('bar')
+    fd:close()
+
+    var x = fd:readline()
+    var x = if false then 1 else 2 end
+    var x = {foo='bar', baz='bat'}
+
+    'foo':len()
+
+    return 0
+end
+
+stmt := 
+    var name = expr
+    for i in expr do block end
+    while expr do block end
+    type name do bindings end 
+    module name do bindings end
+    interface do name end
+    function name(arg Type...) Type... do block end
+    expr
+
+block := 
+    expr... [return]
+
+expr := 
+    function(arg Type,...) Type,... do block end
+    module bindings end
+    type bindings end
+    interface bindings end
+    require ( string )
+    expr [and,or,+,*,/,|,&,<,<=,>,>=,==,!=,%,..,^,~=] expr
+    - not expr
+    expr(expr,...)
+    expr:name(expr,...)
+    expr.name
+    expr = expr
+    false
+    true
+    1...
+    'string'
+    "string"
+
+

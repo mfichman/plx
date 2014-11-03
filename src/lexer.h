@@ -35,14 +35,21 @@ typedef enum Token {
   TT_GE,
   TT_LE,
   TT_EQ,
+  TT_COMMENT,
   TT_STRING,
-  TT_CONCAT
+  TT_CONCAT,
+  TT_NAME,
+  TT_NUMBER
 } TokenType;
 
 Lexer* Lexer_new(MemPool* pool);
 void Lexer_setpos(Lexer* self, char* data);
 TokenType Lexer_nexttoken(Lexer* self);
+TokenType Lexer_debugtoken(Lexer* self);
 char* Lexer_tokendata(Lexer* self);
 size_t Lexer_tokenlen(Lexer* self);
+int Lexer_line(Lexer* self);
+int Lexer_column(Lexer* self);
+
 
 #endif
