@@ -1,6 +1,6 @@
 # plx
 
-Programming language X.
+Programming language X (I can't think of a good name at the moment).
 
 This language is based on a simple idea: a "static" Lua. The idea is to use type inference and structural typing. 
 When you declare a type using Lua's table constructor syntax, i.e.:
